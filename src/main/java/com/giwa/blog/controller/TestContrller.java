@@ -15,7 +15,7 @@ public class TestContrller {
      */
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello() {
-        return "hello " +testhello;
+        return "hello1 " +testhello;
     }
 
     @RequestMapping(value = "/hellopost", method = RequestMethod.POST)

@@ -11,14 +11,15 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 public class BlogApplication {
 
-	private static final Logger LOG = LoggerFactory.getLogger(BlogApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BlogApplication.class);
 
-	public static void main(String[] args) {
-		//SpringApplication.run(BlogApplication.class, args);
-		SpringApplication app = new SpringApplication(BlogApplication.class);
-		Environment env =app.run(args).getEnvironment();
-		LOG.info("启动成功！！");
-		LOG.info("地址：\thttp://127.0.0.1:{}",env.getProperty("server.port"));
-	}
+    public static void main(String[] args) {
+        //SpringApplication.run(BlogApplication.class, args);
+        SpringApplication app = new SpringApplication(BlogApplication.class);
+        Environment env = app.run(args).getEnvironment();
+        LOG.info("启动成功！！");
+        LOG.info("地址：\thttp://127.0.0.1:{}", env.getProperty("server.port"));
+    }
+
 
 }
