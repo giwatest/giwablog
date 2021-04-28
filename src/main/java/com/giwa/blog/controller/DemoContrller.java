@@ -10,15 +10,12 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
+@RequestMapping("/demo")
 public class DemoContrller {
-
     @Resource
     private DemoService demoService;
-    
-
-    @RequestMapping(value = "/demo/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Demo> list() {
         return demoService.list();
     }
-
 }
