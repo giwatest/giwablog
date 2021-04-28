@@ -6,4 +6,4 @@ create table `demo` (
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment '测试';
 
-insert into `test` values (1,'测试','12345');
+insert into `demo` values (1,'测试','12345');
