@@ -1,2 +1,2 @@
 
-GET http://localhost:8880/ebook/list?name=vue
+GET http://localhost:8885/ebook/list?page=1&size=3
