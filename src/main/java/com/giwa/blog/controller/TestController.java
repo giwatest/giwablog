@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-public class TestContrller {
+public class TestController {
 
     @Value("${test.hello:TEST}")
     private String testhello;

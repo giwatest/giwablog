@@ -1,2 +1,11 @@
 
 GET http://localhost:8885/ebook/list?page=1&size=3
+
+###
+POST http://localhost:8885/ebook/save
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "1111"
+}
