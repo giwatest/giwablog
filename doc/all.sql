@@ -23,4 +23,7 @@ create table `ebook` (
 ) engine=innodb default charset=utf8mb4 comment '电子书';
 
 insert into `ebook` (id, name, description) values (1, 'Spring Boot 入门教程', '零基础入门，Java企业开发');
-insert into `ebook` (id, name, description) values (2, 'Vue 入门教程', '零基础入门，Vue企业开发');
+insert into `ebook` (id, name, description) values (2, 'Vue1 入门教程', '零基础入门，Vue企业开发');
+insert into `ebook` (id, name, description) values (3, 'Vue2 入门教程', '零基础入门，Vue企业开发');
+insert into `ebook` (id, name, description) values (4, 'Vue3 入门教程', '零基础入门，Vue企业开发');
+insert into `ebook` (id, name, description) values (5, 'Vue4 入门教程', '零基础入门，Vue企业开发');
