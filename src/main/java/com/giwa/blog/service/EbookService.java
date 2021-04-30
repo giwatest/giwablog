@@ -10,6 +10,7 @@ import com.giwa.blog.req.EbookSaveReq;
 import com.giwa.blog.resp.EbookQueryResp;
 import com.giwa.blog.resp.PageResp;
 import com.giwa.blog.util.CopyUtil;
+import com.giwa.blog.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class EbookService {
 
     @Resource
     private EbookMapper ebookMapper;
+
+    @Resource
+    private SnowFlake snowFlake;
     private static final Logger Log = LoggerFactory.getLogger(EbookService.class);
     public PageResp<EbookQueryResp> list(EbookQueryReq req){
         EbookExample ebookExample = new EbookExample();
@@ -46,10 +50,15 @@ public class EbookService {
         Ebook ebook = CopyUtil.copy(ebookSaveReq, Ebook.class);
         if(ObjectUtils.isEmpty(ebookSaveReq.getId())){
             //insert
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         }else{
             //update
             ebookMapper.updateByPrimaryKey(ebook);
         }
+    }
+
+    public void delete(Long id){
+        ebookMapper.deleteByPrimaryKey(id);
     }
 }
