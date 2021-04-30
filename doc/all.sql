@@ -70,3 +70,4 @@ create table `content` (
     `content` mediumtext not null comment '内容',
     primary key (`id`)
 )engine=innodb default charset=utf8mb4 comment='文档';
+
