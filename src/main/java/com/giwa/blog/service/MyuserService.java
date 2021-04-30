@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.giwa.blog.domain.Myuser;
 import com.giwa.blog.domain.MyuserExample;
+import com.giwa.blog.exception.BusinessException;
+import com.giwa.blog.exception.BusinessExceptionCode;
 import com.giwa.blog.mapper.MyuserMapper;
 import com.giwa.blog.req.MyuserQueryReq;
 import com.giwa.blog.req.MyuserSaveReq;
@@ -14,6 +16,7 @@ import com.giwa.blog.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
@@ -50,16 +53,37 @@ public class MyuserService {
     public void save(MyuserSaveReq myuserSaveReq){
         Myuser myuser = CopyUtil.copy(myuserSaveReq, Myuser.class);
         if(ObjectUtils.isEmpty(myuserSaveReq.getId())){
-            //insert
-            myuser.setId(snowFlake.nextId());
-            myuserMapper.insert(myuser);
+            Myuser myuser1 = selectByLoginame(myuserSaveReq.getLoginName());
+            if(ObjectUtils.isEmpty(myuser1)){
+                //insert
+                myuser.setId(snowFlake.nextId());
+                myuserMapper.insert(myuser);
+            }else{
+                //提示用户名重复
+                throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
+            }
+
         }else{
             //update
-            myuserMapper.updateByPrimaryKey(myuser);
+            myuser.setLoginName(null);
+            myuserMapper.updateByPrimaryKeySelective(myuser);
         }
     }
 
     public void delete(Long id){
         myuserMapper.deleteByPrimaryKey(id);
     }
+    public Myuser selectByLoginame(String loginName){
+        MyuserExample myuserExample = new MyuserExample();
+        MyuserExample.Criteria criteria = myuserExample.createCriteria();
+        criteria.andLoginNameEqualTo(loginName);
+        List<Myuser> myusers = myuserMapper.selectByExample(myuserExample);
+        if(CollectionUtils.isEmpty(myusers)){
+            return null;
+        }else {
+            return myusers.get(0);
+        }
+
+    }
+
 }
