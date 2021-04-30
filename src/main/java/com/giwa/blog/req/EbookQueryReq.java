@@ -2,7 +2,16 @@ package com.giwa.blog.req;
 
 public class EbookQueryReq extends PageReq{
     private Long id;
+    private Long category2Id;
     private String name;
+
+    public Long getCategory2Id() {
+        return category2Id;
+    }
+
+    public void setCategory2Id(Long category2Id) {
+        this.category2Id = category2Id;
+    }
 
     public Long getId() {
         return id;
@@ -22,13 +31,11 @@ public class EbookQueryReq extends PageReq{
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append("]");
+        final StringBuffer sb = new StringBuffer("EbookQueryReq{");
+        sb.append("id=").append(id);
+        sb.append(", category2Id=").append(category2Id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append('}');
         return sb.toString();
     }
 }

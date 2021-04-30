@@ -1,0 +1,12 @@
+
+GET http://localhost:8885/category/list?page=1&size=10
+
+###
+POST http://localhost:8885/category/save
+Content-Type: application/json
+
+{
+  "name": "大数据",
+  "sort": 300,
+  "parent": 0
+}

@@ -27,3 +27,18 @@ insert into `ebook` (id, name, description) values (2, 'Vue1 入门教程', '零
 insert into `ebook` (id, name, description) values (3, 'Vue2 入门教程', '零基础入门，Vue企业开发');
 insert into `ebook` (id, name, description) values (4, 'Vue3 入门教程', '零基础入门，Vue企业开发');
 insert into `ebook` (id, name, description) values (5, 'Vue4 入门教程', '零基础入门，Vue企业开发');
+
+drop table if exists `category`;
+create table `category` (
+    `id` bigint not null comment 'id',
+    `parent` bigint not null default 0 comment '父id',
+    `name` varchar(50) not null comment '名称',
+    `sort` int comment '顺序',
+    primary key (`id`)
+)engine=innodb default charset=utf8mb4 comment='分类';
+
+insert into `category` (id, parent, name, sort) values (100,000,'前端开发',100);
+insert into `category` (id, parent, name, sort) values (101,100,'Vue',101);
+insert into `category` (id, parent, name, sort) values (102,000,'HTML',102);
+insert into `category` (id, parent, name, sort) values (200,000,'基础应用',200);
+insert into `category` (id, parent, name, sort) values (201,200,'基础应用',201);
