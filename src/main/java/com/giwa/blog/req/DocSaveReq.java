@@ -17,6 +17,17 @@ public class DocSaveReq {
     @NotNull(message = "【排序】不能为空")
     private Integer sort;
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @NotNull(message = "【内容】不能为空")
+    private String content;
+
     private Integer viewCount;
 
     private Integer voteCount;

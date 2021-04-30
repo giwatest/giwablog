@@ -2,8 +2,10 @@ package com.giwa.blog.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.giwa.blog.domain.Content;
 import com.giwa.blog.domain.Doc;
 import com.giwa.blog.domain.DocExample;
+import com.giwa.blog.mapper.ContentMapper;
 import com.giwa.blog.mapper.DocMapper;
 import com.giwa.blog.req.DocQueryReq;
 import com.giwa.blog.req.DocSaveReq;
@@ -24,6 +26,8 @@ public class DocService {
 
     @Resource
     private DocMapper docMapper;
+    @Resource
+    private ContentMapper contentMapper;
 
     @Resource
     private SnowFlake snowFlake;
@@ -55,19 +59,29 @@ public class DocService {
 
     public void save(DocSaveReq docSaveReq){
         Doc doc = CopyUtil.copy(docSaveReq, Doc.class);
+        Content content = CopyUtil.copy(docSaveReq, Content.class);
         if(ObjectUtils.isEmpty(docSaveReq.getId())){
             //insert
             doc.setId(snowFlake.nextId());
             docMapper.insert(doc);
+            content.setId(doc.getId());
+            contentMapper.insert(content);
+
         }else{
             //update
             docMapper.updateByPrimaryKey(doc);
+            contentMapper.updateByExampleWithBLOBs(content);
         }
     }
 
     public void delete(Long id){
         docMapper.deleteByPrimaryKey(id);
     }
+    public String findContent(Long id){
+        Content content = contentMapper.selectByPrimaryKey(id);
+        return content.getContent();
+    }
+
     public void delete(List<String> ids){
         DocExample docExample = new DocExample();
         docExample.setOrderByClause("sort asc");

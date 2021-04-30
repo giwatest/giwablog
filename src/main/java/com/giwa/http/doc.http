@@ -2,13 +2,18 @@
 GET http://localhost:8885/doc/list?page=1&size=10
 
 ###
+GET http://localhost:8885/doc/find-content/43226620911292416
+
+###
 POST http://localhost:8885/doc/save
 Content-Type: application/json
 
 {
+  "ebookId": 1,
   "name": "大数据",
   "sort": 300,
-  "parent": 0
+  "parent": 0,
+  "content": "1234567890qwertyuiop"
 }
 
 ###
