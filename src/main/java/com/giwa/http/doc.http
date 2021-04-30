@@ -1,0 +1,15 @@
+
+GET http://localhost:8885/doc/list?page=1&size=10
+
+###
+POST http://localhost:8885/doc/save
+Content-Type: application/json
+
+{
+  "name": "大数据",
+  "sort": 300,
+  "parent": 0
+}
+
+###
+DELETE http://localhost:8885/doc/delete/1,2,3
