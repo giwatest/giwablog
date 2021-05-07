@@ -6,6 +6,7 @@ import com.giwa.blog.resp.CommonResp;
 import com.giwa.blog.resp.MyuserQueryResp;
 import com.giwa.blog.resp.PageResp;
 import com.giwa.blog.service.MyuserService;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ public class MyuserController {
     }
     @PostMapping(value = "/save")
     public CommonResp save(@Valid @RequestBody MyuserSaveReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         CommonResp resp = new CommonResp<>();
         myuserService.save(req);
         return resp;
