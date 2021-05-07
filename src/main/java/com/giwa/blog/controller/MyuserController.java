@@ -1,6 +1,7 @@
 package com.giwa.blog.controller;
 
 import com.giwa.blog.req.MyuserQueryReq;
+import com.giwa.blog.req.MyuserResetPasswordReq;
 import com.giwa.blog.req.MyuserSaveReq;
 import com.giwa.blog.resp.CommonResp;
 import com.giwa.blog.resp.MyuserQueryResp;
@@ -36,6 +37,13 @@ public class MyuserController {
     public CommonResp delete(@PathVariable Long id) {
         CommonResp resp = new CommonResp<>();
         myuserService.delete(id);
+        return resp;
+    }
+    @PostMapping(value = "/reset-password")
+    public CommonResp resetPassword(@Valid @RequestBody MyuserResetPasswordReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        CommonResp resp = new CommonResp<>();
+        myuserService.resetPassword(req);
         return resp;
     }
 }

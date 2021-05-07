@@ -8,6 +8,7 @@ import com.giwa.blog.exception.BusinessException;
 import com.giwa.blog.exception.BusinessExceptionCode;
 import com.giwa.blog.mapper.MyuserMapper;
 import com.giwa.blog.req.MyuserQueryReq;
+import com.giwa.blog.req.MyuserResetPasswordReq;
 import com.giwa.blog.req.MyuserSaveReq;
 import com.giwa.blog.resp.MyuserQueryResp;
 import com.giwa.blog.resp.PageResp;
@@ -86,4 +87,9 @@ public class MyuserService {
 
     }
 
+
+    public void resetPassword(MyuserResetPasswordReq myuserResetPasswordReq){
+        Myuser myuser = CopyUtil.copy(myuserResetPasswordReq, Myuser.class);
+        myuserMapper.updateByPrimaryKeySelective(myuser);
+    }
 }
