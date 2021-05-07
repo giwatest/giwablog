@@ -7,9 +7,11 @@ import com.giwa.blog.domain.MyuserExample;
 import com.giwa.blog.exception.BusinessException;
 import com.giwa.blog.exception.BusinessExceptionCode;
 import com.giwa.blog.mapper.MyuserMapper;
+import com.giwa.blog.req.MyuserLoginReq;
 import com.giwa.blog.req.MyuserQueryReq;
 import com.giwa.blog.req.MyuserResetPasswordReq;
 import com.giwa.blog.req.MyuserSaveReq;
+import com.giwa.blog.resp.MyuserLoginResp;
 import com.giwa.blog.resp.MyuserQueryResp;
 import com.giwa.blog.resp.PageResp;
 import com.giwa.blog.util.CopyUtil;
@@ -91,5 +93,25 @@ public class MyuserService {
     public void resetPassword(MyuserResetPasswordReq myuserResetPasswordReq){
         Myuser myuser = CopyUtil.copy(myuserResetPasswordReq, Myuser.class);
         myuserMapper.updateByPrimaryKeySelective(myuser);
+    }
+
+
+    public MyuserLoginResp login(MyuserLoginReq myuserLoginReq){
+        Myuser userDb =  selectByLoginame(myuserLoginReq.getLoginName());
+        if(ObjectUtils.isEmpty(userDb)){
+            //用户不存在
+            Log.info("用户不存在：{}",myuserLoginReq.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        }else{
+            if(userDb.getPassword().equals(myuserLoginReq.getPassword())){
+                //登录成功
+                MyuserLoginResp myuserLoginResp = CopyUtil.copy(userDb,MyuserLoginResp.class);
+                return myuserLoginResp;
+            }else{
+                //密码不对
+                Log.info("密码不对,输入密码{}，数据库密码",myuserLoginReq.getPassword(),userDb.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            }
+        }
     }
 }

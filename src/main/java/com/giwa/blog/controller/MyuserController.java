@@ -1,9 +1,11 @@
 package com.giwa.blog.controller;
 
+import com.giwa.blog.req.MyuserLoginReq;
 import com.giwa.blog.req.MyuserQueryReq;
 import com.giwa.blog.req.MyuserResetPasswordReq;
 import com.giwa.blog.req.MyuserSaveReq;
 import com.giwa.blog.resp.CommonResp;
+import com.giwa.blog.resp.MyuserLoginResp;
 import com.giwa.blog.resp.MyuserQueryResp;
 import com.giwa.blog.resp.PageResp;
 import com.giwa.blog.service.MyuserService;
@@ -44,6 +46,14 @@ public class MyuserController {
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         CommonResp resp = new CommonResp<>();
         myuserService.resetPassword(req);
+        return resp;
+    }
+    @PostMapping(value = "/login")
+    public CommonResp login(@Valid @RequestBody MyuserLoginReq req) {
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        CommonResp resp = new CommonResp<>();
+        MyuserLoginResp userLoginResp = myuserService.login(req);
+        resp.setContent(userLoginResp);
         return resp;
     }
 }
