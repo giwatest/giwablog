@@ -1,4 +1,4 @@
-GET http://localhost:8880/hello
+GET http://localhost:8885/hello
 #Accept: application/json
 
 > {%
@@ -10,10 +10,13 @@ client.test("test-hello", function() {
 
 ###
 
-POST http://localhost:8880/hellopost
+POST http://localhost:8885/hellopost
 Content-Type: application/x-www-form-urlencoded
 
 name=Test
 ###
 
-GET http://localhost:8880/test/list
+GET http://localhost:8885/test/list
+
+###
+GET http://localhost:8885/redis/get/46058219881238528

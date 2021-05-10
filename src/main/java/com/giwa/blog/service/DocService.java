@@ -7,6 +7,7 @@ import com.giwa.blog.domain.Doc;
 import com.giwa.blog.domain.DocExample;
 import com.giwa.blog.mapper.ContentMapper;
 import com.giwa.blog.mapper.DocMapper;
+import com.giwa.blog.mapper.DocMapperCust;
 import com.giwa.blog.req.DocQueryReq;
 import com.giwa.blog.req.DocSaveReq;
 import com.giwa.blog.resp.DocQueryResp;
@@ -26,6 +27,8 @@ public class DocService {
 
     @Resource
     private DocMapper docMapper;
+    @Resource
+    private DocMapperCust docMapperCust;
     @Resource
     private ContentMapper contentMapper;
 
@@ -63,6 +66,8 @@ public class DocService {
         if(ObjectUtils.isEmpty(docSaveReq.getId())){
             //insert
             doc.setId(snowFlake.nextId());
+            doc.setViewCount(0);
+            doc.setVoteCount(0);
             docMapper.insert(doc);
             content.setId(doc.getId());
             contentMapper.insert(content);
@@ -77,9 +82,16 @@ public class DocService {
     public void delete(Long id){
         docMapper.deleteByPrimaryKey(id);
     }
+
     public String findContent(Long id){
         Content content = contentMapper.selectByPrimaryKey(id);
-        return content.getContent();
+        //文档阅读数+1
+        docMapperCust.increaseViewCount(id);
+        if(ObjectUtils.isEmpty(content)){
+            return "";
+        }else{
+            return content.getContent();
+        }
     }
 
     public void delete(List<String> ids){
@@ -88,5 +100,9 @@ public class DocService {
         DocExample.Criteria criteria = docExample.createCriteria();
         criteria.andIdIn(ids);
         docMapper.deleteByExample(docExample);
+    }
+
+    public void vote(Long id){
+        docMapperCust.increaseVoteCount(id);
     }
 }

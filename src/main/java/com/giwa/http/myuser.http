@@ -7,12 +7,23 @@ GET http://localhost:8885/myuser/find-content/43226620911292416
 ###
 POST http://localhost:8885/myuser/save
 Content-Type: application/json
+token: 46067938091995136
 
 {
-  "loginName": "liubingna",
+  "loginName": "liubingna1",
   "name": "娜娜",
   "password": "nana1234"
 }
 
 ###
 DELETE http://localhost:8885/myuser/delete/1,2,3
+
+###
+POST http://localhost:8885/myuser/login
+Content-Type: application/json
+
+{
+  "loginName": "liubingna1",
+  "name": "娜娜",
+  "password": "nana1234"
+}

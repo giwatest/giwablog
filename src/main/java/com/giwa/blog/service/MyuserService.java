@@ -33,6 +33,7 @@ public class MyuserService {
 
     @Resource
     private SnowFlake snowFlake;
+
     private static final Logger Log = LoggerFactory.getLogger(MyuserService.class);
     public PageResp<MyuserQueryResp> list(MyuserQueryReq req){
         MyuserExample myuserExample = new MyuserExample();
